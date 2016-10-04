@@ -3,19 +3,15 @@ import random
 filename = "20k.txt"
 
 def main(filename):
-	words_file = open(filename, 'r')
-
-	words = words_file.read().split("\n")
-	temp_words = []
-	for word in words:
-		temp_words.append(word.strip("\r"))
-	words = temp_words
-
+	with open(filename) as words_file:
+		words = list(set(word.strip() for word in words_file))
 	while True:
-		length = int(raw_input("Words:"))
-		for i in range(0,length):
-			print(words[random.randrange(0,len(words)+1)]),
-		print("\n")
+		length = raw_input("Words:")
+		try:
+			length = int(length)
+			print(" ".join(random.choice(words) for _ in range(length)))
+		except:
+			print("Please enter a valid number.")
 
 
 if __name__ == "__main__":
