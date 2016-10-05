@@ -1,11 +1,17 @@
 import random
 import sys
 
+if sys.version.startswith('2'):
+    get_user_input = raw_input
+else:
+    get_user_input = input
+
 filename = "20k.txt"
 
 
 def get_random_lines(file, num_of_lines):
-    last_char = file.seek(0, 2) - 1  # skipping EOF position with -1
+    file.seek(0, 2)
+    last_char = file.tell() - 1  # skipping EOF position with -1
 
     lines = []
     for _ in range(num_of_lines):
@@ -34,7 +40,7 @@ def main(filename):
     with open(filename) as words_file:
         while True:
             try:
-                length = input('Enter number of words: ')
+                length = get_user_input('Enter number of words: ')
                 length = int(length)
                 print(' '.join(get_random_lines(words_file, length)))
             except ValueError:
